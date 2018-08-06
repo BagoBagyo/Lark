@@ -1,30 +1,6 @@
 # K,R,G,Y,B,W
 
 import time
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-from matplotlib import style
-
-style.use('fivethirtyeight')
-
-fig = plt.figure()
-axl = fig.add_subplot(1,1,1)
-
-def animate(i):
-        graph_data = open('example.txt','r').read()
-        lines = graph_data.split('\n')
-        xs = []
-        ys = []
-        for line in lines:
-                if len(line) > 1:
-                        x,y = line.split(',')
-                        xs.append(x)
-                        ys.append(y)
-        axl.clear()
-        axl.plot(xs, ys)
-
-ani = animation.FuncAnimation(fig, animate, interval=1000)
-plt.show()
 
 count = int(0)
 
@@ -58,7 +34,7 @@ try:
         GPIO.setmode(GPIO.BOARD)
         for fret in range(1, 22):
                 #print("hello")
-                print ("Fret: {}, Pin: {}".format(fret, fret2Pin(fret)))
+                #print ("Fret: {}, Pin: {}".format(fret, fret2Pin(fret)))
                 GPIO.setup(fret2Pin(fret), GPIO.IN, GPIO.PUD_UP)
                 #GPIO.setup(fret2Pin(fret), GPIO.IN)
                 #print(GPIO.gpio_function(fret2Pin(fret)))
@@ -68,12 +44,14 @@ try:
         print()
         while True:
                 #time.sleep(1)
-                for fret in range(1,22):
+                for fret in range(1,5):
                         if GPIO.event_detected(fret2Pin(fret)):
-                                print("Fret: {}".format(fret
-                                                        ))
-                        #print("Count: {}".format(int(count/2)))
-                #count=0
+                                print("    " * fret, end = "")
+                                print(fret)
+#                        else:
+#                                print("****")
+#                        #print("Count: {}".format(int(count/2)))
+#                #count=0
 finally:
         GPIO.cleanup()
         print("Bye!")
